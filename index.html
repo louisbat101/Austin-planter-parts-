@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#173c2b">
+    <meta name="description" content="Browse and prepare a parts quote from an agricultural replacement parts catalog.">
+    <title>Field &amp; Furrow — Parts shop</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="announcement">
+      <span>Local parts finder</span>
+      <span>Part details are for reference — confirm fitment before ordering.</span>
+      <a href="#shop">Shop parts <span aria-hidden="true">↓</span></a>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Field and Furrow home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M20 35V8M20 20C11 20 7 15 7 8c8 0 13 4 13 12Zm0 5c9 0 13-5 13-12-8 0-13 4-13 12Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-name">field<span>&amp;</span>furrow</span>
+      </a>
+      <nav class="header-links" aria-label="Main navigation">
+        <a href="#shop">Shop parts</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+      <button class="cart-button" id="open-cart" type="button" aria-label="Open quote list">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 11.1a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 1.9-1.4L22 8H6M10 21h.01M18 21h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Quote list</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> BUILT FOR THE NEXT SEASON</p>
+          <h1 id="hero-title">Keep your<br>operation <em>moving.</em></h1>
+          <p class="hero-description">Find replacement parts from our agricultural parts catalog. Search a part number, machine, or the job you need to get done.</p>
+          <form class="hero-search" id="search-form" role="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <label class="visually-hidden" for="search-input">Search parts and catalog</label>
+            <input id="search-input" type="search" placeholder="Try “G43899” or “closing wheel”" autocomplete="off">
+            <button type="submit">Find parts <span aria-hidden="true">→</span></button>
+            <div class="suggestions" id="suggestions" hidden></div>
+          </form>
+          <p class="search-hint"><span aria-hidden="true">↳</span> Results show the part photo.</p>
+          <div class="hero-stats">
+            <div><strong id="stat-parts">1,500+</strong><span>parts with photos</span></div>
+            <div><strong id="stat-cats">26</strong><span>categories</span></div>
+            <div><strong>Quote</strong><span>no made-up prices</span></div>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-sun"></div>
+          <div class="art-stamp">FIELD<br>READY</div>
+          <div class="art-rows"></div>
+          <div class="art-disc"><span></span></div>
+          <div class="art-caption"><span>PARTS THAT<br>PUT IN WORK</span><span class="art-caption-line"></span></div>
+        </div>
+      </section>
+
+      <section class="categories-section" id="categories" aria-labelledby="categories-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow dark-eyebrow">SHOP BY CATEGORY</p>
+            <h2 id="categories-title">Pick your machine.</h2>
+            <p class="section-subtitle">Every section of the catalog, with a real photo and part count.</p>
+          </div>
+        </div>
+        <div class="category-groups" id="category-groups"></div>
+      </section>
+
+      <section class="trust-strip" id="how-it-works" aria-label="How this local shop works">
+        <div class="trust-item"><span class="trust-icon">01</span><span><strong>Find the part</strong><small>Search part numbers or equipment</small></span></div>
+        <span class="trust-divider" aria-hidden="true"></span>
+        <div class="trust-item"><span class="trust-icon">02</span><span><strong>Check the details</strong><small>Confirm fitment and part numbers</small></span></div>
+        <span class="trust-divider" aria-hidden="true"></span>
+        <div class="trust-item"><span class="trust-icon">03</span><span><strong>Request a quote</strong><small>Build an email with your parts list</small></span></div>
+      </section>
+
+      <section class="shop-section" id="shop" aria-labelledby="shop-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow dark-eyebrow">THE PARTS COUNTER</p>
+            <h2 id="shop-title">Find your fit.</h2>
+            <p class="section-subtitle">Every part in the catalog, with its photo, searchable by number or description.</p>
+          </div>
+        </div>
+        <div class="shop-toolbar">
+          <div class="active-filter" id="active-filter"></div>
+          <label class="sort-control">Sort
+            <select id="sort-select" aria-label="Sort parts">
+              <option value="featured">Catalog order</option>
+              <option value="part-asc">Part number A–Z</option>
+              <option value="part-desc">Part number Z–A</option>
+            </select>
+          </label>
+        </div>
+        <p class="results-summary" id="results-summary" aria-live="polite"></p>
+        <div class="product-grid" id="product-grid"></div>
+        <button class="load-more" id="load-more-products" type="button" hidden>Show more parts <span aria-hidden="true">↓</span></button>
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-icon" aria-hidden="true">⌕</span>
+          <h3>No part matches that search.</h3>
+          <p>Try a part number, a machine name, or a different word.</p>
+        </div>
+        <aside class="catalog-note">
+          <span class="note-icon" aria-hidden="true">i</span>
+          <p>Photos, part numbers and fitment may contain errors. Confirm before ordering. This local page does not show live stock or pricing.</p>
+        </aside>
+      </section>
+
+      <dialog class="part-dialog" id="part-dialog" aria-labelledby="dialog-title">
+        <button class="icon-button dialog-close" id="dialog-close" type="button" aria-label="Close">×</button>
+        <div class="dialog-body" id="dialog-body"></div>
+      </dialog>
+
+      <section class="bottom-cta">
+        <div>
+          <p class="eyebrow">HAVE A PART NUMBER?</p>
+          <h2>Start with the number.<br>We’ll help with the rest.</h2>
+        </div>
+        <a href="#shop" class="bottom-cta-button">Search parts <span aria-hidden="true">↑</span></a>
+        <div class="bottom-cta-lines" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 35V8M20 20C11 20 7 15 7 8c8 0 13 4 13 12Zm0 5c9 0 13-5 13-12-8 0-13 4-13 12Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">field<span>&amp;</span>furrow</span>
+      </a>
+      <span>Local parts shop</span>
+      <a href="#shop">Shop parts <span aria-hidden="true">↓</span></a>
+    </footer>
+
+    <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+    <aside class="quote-drawer" id="quote-drawer" aria-labelledby="drawer-title" aria-modal="true" role="dialog" aria-hidden="true">
+      <div class="drawer-header">
+        <div><p class="eyebrow dark-eyebrow">YOUR PARTS LIST</p><h2 id="drawer-title">Quote request</h2></div>
+        <button class="icon-button" id="close-cart" type="button" aria-label="Close quote list">×</button>
+      </div>
+      <div class="drawer-items" id="drawer-items"></div>
+      <div class="drawer-empty" id="drawer-empty">
+        <span aria-hidden="true">＋</span>
+        <p>Your list is ready when you are.<br>Add parts to build a quote request.</p>
+        <button class="text-button" id="continue-shopping" type="button">Keep browsing <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="drawer-footer" id="drawer-footer" hidden>
+        <p>Prices and availability are confirmed by the seller. This button opens a pre-filled email draft; it does not send anything automatically.</p>
+        <a class="quote-submit" id="quote-submit" href="#">Prepare quote email <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
